@@ -1,0 +1,23 @@
+# http://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+
+[BUILD]
+indent_size = 4
+
+[CMakeLists.*]
+indent_size = 4
+
+[*.h,*.cc,*.c,*.cpp]
+indent_size = 2
+
+[*.md]
+indent_size = 2
+
+[*.sh]
+indent_size = 2
+© 2021 GitHub, Inc.
