@@ -11,12 +11,11 @@ int main(int argc, char** argv) {
   }
 
   port = atoi(argv[2]);
-
   localSocket = createLocalSocket();
-
   endpoint = createEndpointAddress(argv[1], port);
 
-  sensor_t s = H;
-  double TaValue = getSensor(s);
-  printf("Ta: %f", TaValue);
+  setAtuator(Na, 1.00);
+  setAtuator(Nf, 2.00);
+  setAtuator(Ni, 3.00);
+  setAtuator(Q, 4.00);
 }
