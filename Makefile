@@ -22,3 +22,6 @@ $(OBJ)/%.o: $(SRC)/%.c
 
 run:
 	@$(BIN)/app $(ARGS)
+
+dev: app run
+	@echo ""
