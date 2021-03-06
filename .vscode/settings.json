@@ -5,6 +5,8 @@
         "main.h": "c",
         "atuator.h": "c",
         "buffer": "c",
-        "socket.h": "c"
+        "socket.h": "c",
+        "resources.h": "c",
+        "tasks.h": "c"
     }
 }

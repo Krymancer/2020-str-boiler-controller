@@ -2,7 +2,7 @@
 
 #include <pthread.h>
 
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 3
 
 static char* buffer0[BUFFER_SIZE];
 static char* buffer1[BUFFER_SIZE];
@@ -26,4 +26,4 @@ void insertBuffer(char* content);
  *
  * @param content an string contating the information
  */
-char* waitBufferFull(void);
+char** waitBufferFull(void);

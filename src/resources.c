@@ -1,5 +1,7 @@
 #include "resources.h"
 
-void allocateScreen(void) { pthread_mutex_lock(&screenMutex); }
+pthread_mutex_t screenMutex = PTHREAD_MUTEX_INITIALIZER;
 
-void freeScreen(void) { pthread_mutex_unlock(&screenMutex); }
+inline void allocateScreen(void) { pthread_mutex_lock(&screenMutex); }
+
+inline void freeScreen(void) { pthread_mutex_unlock(&screenMutex); }

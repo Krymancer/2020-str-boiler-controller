@@ -16,14 +16,17 @@ void insertBuffer(char* content) {
   pthread_mutex_unlock(&mutualExclusion);
 }
 
-char* waitBufferFull(void) {
-  char* buffer;
+char** waitBufferFull(void) {
+  char** buffer;
   pthread_mutex_lock(&mutualExclusion);
-  while (record == -1) pthread_cond_wait(&bufferFull, &mutualExclusion);
-  if (record == 0)
+  while (record == -1) {
+    pthread_cond_wait(&bufferFull, &mutualExclusion);
+  }
+  if (record == 0) {
     buffer = buffer0;
-  else
+  } else {
     buffer = buffer1;
+  }
   record = -1;
   pthread_mutex_unlock(&mutualExclusion);
   return buffer;
