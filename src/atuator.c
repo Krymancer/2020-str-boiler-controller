@@ -30,4 +30,5 @@ double setAtuator(atuator_t atuator, double value) {
       break;
     }
   }
+  return OK;
 }

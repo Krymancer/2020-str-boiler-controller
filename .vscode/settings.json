@@ -3,6 +3,8 @@
         "stdio.h": "c",
         "sensor.h": "c",
         "main.h": "c",
-        "atuator.h": "c"
+        "atuator.h": "c",
+        "buffer": "c",
+        "socket.h": "c"
     }
 }

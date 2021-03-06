@@ -4,6 +4,7 @@
 #include "util.h"
 
 /**
+ * Enumerate sensors
  * Ta => Temperatura do ar ambiente em volta do recipiente [ºC]
  * T  => Temperatura da agua no interior do recipiente [ºC]
  * Ti => Temperatura da agua que entra no recipiente [ºC]
@@ -12,18 +13,52 @@
  */
 enum sensors { Ta, T, Ti, No, H };
 
+/**
+ * Variable to store sensors values
+ * sTa => Temperatura do ar ambiente em volta do recipiente [ºC]
+ * sT  => Temperatura da agua no interior do recipiente [ºC]
+ * sTi => Temperatura da agua que entra no recipiente [ºC]
+ * sNo => Fluxo de saida de agua do recipiente [Kg/s]
+ * sH  => Altura da coluna d'agua [m]
+ */
 double sTa, sT, sTi, sNo, sH;
 
+// Sensor type
 typedef enum sensors sensor_t;
 
-#define INVALID_SENSOR -35;
+/**
+ * Get the value of an sensor
+ *
+ * @param sensor sensor to get value from
+ *
+ * @return the value of sensor
+ */
+double getSensor(sensor_t sensor);
 
-double getSensor(sensor_t);
-void setSenstor(sensor_t);
+/**
+ * Set the value of an sensor
+ *
+ * @param sensor sensor to set value from
+ */
+void setSenstor(sensor_t sensor);
 
+// Auxiliar function, create an string and sent to socket
 double getSocketSensorValue(char*);
 
+/**
+ * Refresh the value of all sensors
+ * getting from the Java Application
+ */
 void refreshSensorsValues();
 
+/**
+ * Print the value of an sensor
+ *
+ * @param sensor sensor to print value from
+ */
 void printSensor(sensor_t);
+
+/**
+ * Print the value of all sensors
+ */
 void showSensorsValues();
