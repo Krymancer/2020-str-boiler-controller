@@ -27,7 +27,9 @@ void writeInDisk() {
   }
 
   char** buffer = waitBufferFull();
+  printf("--------------------\n");
   printf("INFO: Write in file\n");
+  printf("--------------------\n");
   for (int i = 0; i < BUFFER_SIZE; i++) {
     fprintf(file, "%s\n", buffer[i]);
   }
@@ -38,7 +40,7 @@ void writeInDisk() {
 double timeDifference(struct timespec start, struct timespec end) {
   double nano = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
   double seconds = nano / (double)1000;
-  double micro = (double)1000000 * nano;
+  double micro = (double)1000000 * seconds;
 
   return micro;
 }

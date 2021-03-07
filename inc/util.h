@@ -22,6 +22,9 @@
 // Nanoseconds in a second
 #define NANOSECONDS_PER_SECOND 1000000000
 
+// Clear screen
+#define clear() printf("\033[H\033[J")
+
 /*
  * Remove given section from string. Negative len means remove
  * everything up to the end.

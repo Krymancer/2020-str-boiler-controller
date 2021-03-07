@@ -79,7 +79,9 @@ void printSensor(sensor_t sensor) {
 }
 
 void showSensorsValues() {
+  clear();
   printf("--------------------\n");
+  printf("Sensors:\n");
   printSensor(Ta);
   printSensor(T);
   printSensor(Ti);

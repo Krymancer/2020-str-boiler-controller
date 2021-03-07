@@ -16,7 +16,7 @@ void temperatureControl(void) {
     double responseTime = timeDifference(t_start, t_end);
 
     char* responseTimeString[1024];
-    fprintf(responseTimeString, "RT[TC] %f", responseTime);
+    sprintf(responseTimeString, "RT[TC] %f", responseTime);
     insertBuffer(responseTimeString);
 
     // Wait until next period
@@ -44,7 +44,7 @@ void waterLevelControl(void) {
     double responseTime = timeDifference(t_start, t_end);
 
     char* responseTimeString[1024];
-    fprintf(responseTimeString, "RT[WL] %f", responseTime);
+    sprintf(responseTimeString, "RT[WL] %f", responseTime);
     insertBuffer(responseTimeString);
 
     // Wait until next period
@@ -58,7 +58,7 @@ void waterLevelControl(void) {
 
 void verifyTemperature(void) {
   struct timespec t_start, t_end;
-  long period = 10000000;  // 50ms
+  long period = 10000000;  // 10ms
   clock_gettime(CLOCK_MONOTONIC, &t_start);
   t_start.tv_sec++;
 
@@ -72,7 +72,7 @@ void verifyTemperature(void) {
     double responseTime = timeDifference(t_start, t_end);
 
     char* responseTimeString[1024];
-    fprintf(responseTimeString, "RT[VT] %f", responseTime);
+    sprintf(responseTimeString, "RT[VT] %f", responseTime);
     insertBuffer(responseTimeString);
 
     // Wait until next period

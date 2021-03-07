@@ -2,7 +2,7 @@
 
 #include <pthread.h>
 
-#define BUFFER_SIZE 3
+#define BUFFER_SIZE 1024  // 2^17
 
 static char* buffer0[BUFFER_SIZE];
 static char* buffer1[BUFFER_SIZE];
