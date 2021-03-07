@@ -38,8 +38,9 @@ void writeInDisk() {
 }
 
 double timeDifference(struct timespec start, struct timespec end) {
-  double nano = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
-  double seconds = nano / (double)1000;
+  double nano = ((end.tv_sec - start.tv_sec) * NANOSECONDS_PER_SECOND) +
+                (end.tv_nsec - start.tv_nsec);
+  double seconds = nano / 1e9;
   double micro = (double)1000000 * seconds;
 
   return micro;
