@@ -8,6 +8,7 @@
         "socket.h": "c",
         "resources.h": "c",
         "tasks.h": "c",
-        "buffer.h": "c"
+        "buffer.h": "c",
+        "util.h": "c"
     }
 }

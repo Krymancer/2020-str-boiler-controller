@@ -37,11 +37,15 @@ void writeInDisk() {
   fclose(file);
 }
 
-double timeDifference(struct timespec start, struct timespec end) {
-  double nano = ((end.tv_sec - start.tv_sec) * NANOSECONDS_PER_SECOND) +
-                (end.tv_nsec - start.tv_nsec);
-  double seconds = nano / 1e9;
-  double micro = (double)1000000 * seconds;
+long timeDifference(struct timespec start, struct timespec end) {
+  long secDiff = end.tv_sec - start.tv_sec;
+  long nsecDiff = end.tv_nsec - start.tv_nsec;
+  long diff = secToNano(secDiff) + nsecDiff;
+  return diff;
+}
 
-  return micro;
+void insertResponseTimeInBuffer(char* task, long responseTime) {
+  char* buffer[256];
+  sprintf(buffer, "RT[%s] %ld", task, responseTime);
+  insertBuffer(buffer);
 }

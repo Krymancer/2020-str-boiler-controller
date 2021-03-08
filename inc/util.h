@@ -20,7 +20,9 @@
 #define TRUE 1
 
 // Nanoseconds in a second
-#define NANOSECONDS_PER_SECOND 1000000000
+#define NANOSECONDS_PER_SECOND ((long)1000000000)
+#define MICROSECONDS_PER_SECOND ((long)1000000)
+#define NANOSECONDS_PER_MICROSECONDS ((long)1000)
 
 // Clear screen
 #define clear() printf("\033[H\033[J")
@@ -31,10 +33,14 @@
  */
 int strcut(char*, int, int);
 
-/*
+/**
  * Write the buffer content into a file
  */
 void writeInDisk();
+
+#define secToMicro(X) (X * MICROSECONDS_PER_SECOND)
+#define secToNano(X) (X * NANOSECONDS_PER_SECOND)
+#define nsecToMicro(X) (X * NANOSECONDS_PER_MICROSECONDS)
 
 /**
  * Calulate the time difference between 2 timespec
@@ -42,6 +48,14 @@ void writeInDisk();
  * @param start the timespec in start
  * @param end the timespec in the end
  *
- * @return the time spend in microseconds
+ * @return the time spent in microseconds
  */
-double timeDifference(struct timespec start, struct timespec end);
+long timeDifference(struct timespec start, struct timespec end);
+
+/**
+ * Insert the response time of a tasnk in buffer
+ *
+ * @param task the task code id
+ * @param responseTime the time spendend in the task
+ */
+void insertResponseTimeInBuffer(char* task, long responseTime);

@@ -13,11 +13,8 @@ void temperatureControl(void) {
 
     clock_gettime(CLOCK_MONOTONIC, &t_end);
 
-    double responseTime = timeDifference(t_start, t_end);
-
-    char* responseTimeString[1024];
-    sprintf(responseTimeString, "RT[TC] %f", responseTime);
-    insertBuffer(responseTimeString);
+    long responseTime = timeDifference(t_start, t_end);
+    insertResponseTimeInBuffer("TC", responseTime);
 
     // Wait until next period
     t_start.tv_nsec += period;
@@ -41,11 +38,8 @@ void waterLevelControl(void) {
 
     clock_gettime(CLOCK_MONOTONIC, &t_end);
 
-    double responseTime = timeDifference(t_start, t_end);
-
-    char* responseTimeString[1024];
-    sprintf(responseTimeString, "RT[WL] %f", responseTime);
-    insertBuffer(responseTimeString);
+    long responseTime = timeDifference(t_start, t_end);
+    insertResponseTimeInBuffer("WL", responseTime);
 
     // Wait until next period
     t_start.tv_nsec += period;
@@ -69,11 +63,8 @@ void verifyTemperature(void) {
 
     clock_gettime(CLOCK_MONOTONIC, &t_end);
 
-    double responseTime = timeDifference(t_start, t_end);
-
-    char* responseTimeString[1024];
-    sprintf(responseTimeString, "RT[VT] %f", responseTime);
-    insertBuffer(responseTimeString);
+    long responseTime = timeDifference(t_start, t_end);
+    insertResponseTimeInBuffer("VT", responseTime);
 
     // Wait until next period
     t_start.tv_nsec += period;
@@ -88,12 +79,37 @@ void showSensorsInfo(void) {
   while (TRUE) {
     sleep(1);
     allocateScreen();
-    refreshSensorsValues();
     showSensorsValues();
+    freeScreen();
+  }
+}
+
+void refreshSensorsInfo(void) {
+  struct timespec t_start, t_end;
+  long period = 10000000;  // 10ms
+  clock_gettime(CLOCK_MONOTONIC, &t_start);
+  t_start.tv_sec++;
+
+  while (1) {
+    clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
+
+    // Do Task
+    refreshSensorsValues();
     char* sensorsString[1024];
     sprintf(sensorsString, "SI[sT] %f\nSI[sNo] %f\nSI[sH] %f", sT, sNo, sH);
     insertBuffer(sensorsString);
-    freeScreen();
+
+    clock_gettime(CLOCK_MONOTONIC, &t_end);
+
+    long responseTime = timeDifference(t_start, t_end);
+    insertResponseTimeInBuffer("RS", responseTime);
+
+    // Wait until next period
+    t_start.tv_nsec += period;
+    while (t_start.tv_nsec >= NANOSECONDS_PER_SECOND) {
+      t_start.tv_nsec -= NANOSECONDS_PER_SECOND;
+      t_start.tv_sec++;
+    }
   }
 }
 

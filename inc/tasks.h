@@ -10,6 +10,7 @@
 void temperatureControl(void);
 void waterLevelControl(void);
 void showSensorsInfo(void);
+void refreshSensorsInfo(void);
 void verifyTemperature(void);
 void temperatureAlarm(void);
 void saveInfoToFile(void);
