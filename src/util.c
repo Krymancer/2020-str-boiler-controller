@@ -27,9 +27,9 @@ void writeInDisk() {
   }
 
   char** buffer = waitBufferFull();
-  printf("--------------------\n");
+  printf(YEL "--------------------\n");
   printf("INFO: Write in file\n");
-  printf("--------------------\n");
+  printf("--------------------\n" RESET);
   for (int i = 0; i < BUFFER_SIZE; i++) {
     fprintf(file, "%s\n", buffer[i]);
   }

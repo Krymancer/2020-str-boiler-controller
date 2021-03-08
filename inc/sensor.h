@@ -2,6 +2,12 @@
 
 #include "socket.h"
 #include "util.h"
+#include <math.h>
+#include <pthread.h>
+
+static pthread_mutex_t sensorMutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t alarmCondition = PTHREAD_COND_INITIALIZER;
+static double temperatureLimit;
 
 /**
  * Enumerate sensors
@@ -62,3 +68,5 @@ void printSensor(sensor_t);
  * Print the value of all sensors
  */
 void showSensorsValues();
+
+void sensorAlarm(double limit);

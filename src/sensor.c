@@ -43,11 +43,18 @@ double getSensor(sensor_t sensor) {
 void setSenstor(sensor_t sensor) { printf("sensor: %d", sensor); }
 
 void refreshSensorsValues() {
+  pthread_mutex_lock(&sensorMutex);
   sTa = getSensor(Ta);
   sTi = getSensor(Ti);
   sT = getSensor(T);
   sNo = getSensor(No);
   sH = getSensor(H);
+
+  if (sT >= temperatureLimit) {
+    pthread_cond_signal(&alarmCondition);
+  }
+
+  pthread_mutex_unlock(&sensorMutex);
 }
 
 void printSensor(sensor_t sensor) {
@@ -80,12 +87,22 @@ void printSensor(sensor_t sensor) {
 
 void showSensorsValues() {
   clear();
-  printf("--------------------\n");
+  printf(GRN "--------------------\n");
   printf("Sensors:\n");
   printSensor(Ta);
   printSensor(T);
   printSensor(Ti);
   printSensor(No);
   printSensor(H);
-  printf("--------------------\n");
+  printf("--------------------\n" RESET);
+}
+
+void sensorAlarm(double limit) {
+  pthread_mutex_lock(&sensorMutex);
+  temperatureLimit = limit;
+  while (sT < temperatureLimit) {
+    pthread_cond_wait(&alarmCondition, &sensorMutex);
+  }
+  temperatureLimit = HUGE_VAL;
+  pthread_mutex_unlock(&sensorMutex);
 }

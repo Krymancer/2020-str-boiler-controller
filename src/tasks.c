@@ -27,7 +27,7 @@ void temperatureControl(void) {
 
 void waterLevelControl(void) {
   struct timespec t_start, t_end;
-  long period = 50000000;  // 50ms
+  long period = 70000000;  // 70ms
   clock_gettime(CLOCK_MONOTONIC, &t_start);
   t_start.tv_sec++;
 
@@ -114,11 +114,17 @@ void refreshSensorsInfo(void) {
 }
 
 void temperatureAlarm(void) {
-  while (1) {
-    if (2 < 1) {
-      printf("TEMPERATURE WARNING!!");
-    }
+  while (TRUE) {
+    sleep(1);
+    sensorAlarm(41);
+    allocateScreen();
+    printf(RED "--------------------\n");
+    printf("TEMPERATURE WARNING\n");
+    printf("--------------------\n" RESET);
+    freeScreen();
   }
+
+  pthread_mutex_unlock(&sensorMutex);
 }
 
 void saveInfoToFile(void) {
