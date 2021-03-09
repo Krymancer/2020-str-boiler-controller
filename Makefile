@@ -4,6 +4,7 @@ SRC=src
 OBJ=obj
 BIN=bin
 FLAGS=-lpthread -w 
+ARGS=192.168.0.174 4545
 
 SRC_FILES=$(wildcard $(SRC)/*.c)
 OBJ_FILES=$(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRC_FILES))
@@ -23,5 +24,5 @@ $(OBJ)/%.o: $(SRC)/%.c
 run:
 	@$(BIN)/app $(ARGS)
 
-dev: app run
-	@echo ""
+dev: clean app run
+	@echo "Full"

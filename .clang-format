@@ -34,3 +34,5 @@ RawStringFormats:
   BasedOnStyle: Google
 
 CommentPragmas: '(@copydoc)'
+
+ColumnLimit: 0

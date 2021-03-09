@@ -1,5 +1,8 @@
 #include "tasks.h"
 
+double tRef = 0;
+double hRef = 0;
+
 void temperatureControl(void) {
   struct timespec t_start, t_end;
   long period = 50000000;  // 50ms
@@ -9,7 +12,7 @@ void temperatureControl(void) {
   while (1) {
     clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
 
-    // Do Task
+    // Do task
 
     clock_gettime(CLOCK_MONOTONIC, &t_end);
 
@@ -35,6 +38,11 @@ void waterLevelControl(void) {
     clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
 
     // Do Task
+    if (sH < hRef) {
+      setAtuator(Ni, 10);
+    } else {
+      setAtuator(Ni, 0);
+    }
 
     clock_gettime(CLOCK_MONOTONIC, &t_end);
 
@@ -60,6 +68,9 @@ void verifyTemperature(void) {
     clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
 
     // Do Task
+    if (sT >= temperatureLimit) {
+      pthread_cond_signal(&alarmCondition);
+    }
 
     clock_gettime(CLOCK_MONOTONIC, &t_end);
 
@@ -95,6 +106,7 @@ void refreshSensorsInfo(void) {
 
     // Do Task
     refreshSensorsValues();
+
     char* sensorsString[1024];
     sprintf(sensorsString, "SI[sT] %f\nSI[sNo] %f\nSI[sH] %f", sT, sNo, sH);
     insertBuffer(sensorsString);
@@ -116,7 +128,7 @@ void refreshSensorsInfo(void) {
 void temperatureAlarm(void) {
   while (TRUE) {
     sleep(1);
-    sensorAlarm(41);
+    sensorAlarm(30);
     allocateScreen();
     printf(RED "--------------------\n");
     printf("TEMPERATURE WARNING\n");

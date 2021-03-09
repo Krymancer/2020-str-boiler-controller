@@ -1,12 +1,15 @@
 #pragma once
 
+#include "atuator.h"
 #include "resources.h"
 #include "sensor.h"
 #include "util.h"
 #include <stdio.h>
 #include <time.h>
 
-// TODO
+extern double hRef;
+extern double tRef;
+
 void temperatureControl(void);
 void waterLevelControl(void);
 void showSensorsInfo(void);

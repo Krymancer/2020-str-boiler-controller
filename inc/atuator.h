@@ -12,7 +12,10 @@
  * Nf => Fluxo de saida de agua para o esgoto [Kg/s]
  * Q => Aquecedor dentro do Recipiente [J/s]
  */
-enum atuators { Na, Ni, Nf, Q };
+enum atuators { Na,
+                Ni,
+                Nf,
+                Q };
 
 /**
  * Store value of atuators

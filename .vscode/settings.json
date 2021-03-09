@@ -9,6 +9,7 @@
         "resources.h": "c",
         "tasks.h": "c",
         "buffer.h": "c",
-        "util.h": "c"
+        "util.h": "c",
+        "sensort.h": "c"
     }
 }

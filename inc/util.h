@@ -5,6 +5,8 @@
 #include <string.h>
 #include <time.h>
 
+#define ps(x) printf("%s\n", x);
+
 // Error opening file code
 #define OPENING_FILE_ERROR -20
 // Invalid atuator error code

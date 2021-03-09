@@ -1,5 +1,7 @@
 #include "socket.h"
 
+pthread_mutex_t socketMutex = PTHREAD_MUTEX_INITIALIZER;
+
 int createLocalSocket(void) {
   int socket_local; /* Socket usado na comunicacao */
 
@@ -52,6 +54,22 @@ int reciveMessage(char* buffer, int TAM_BUFFER) {
   if (bytes_recebidos < 0) {
     perror("recvfrom");
   }
-
   return bytes_recebidos;
+}
+
+void messageSocket(const char* message) {
+  pthread_mutex_lock(&socketMutex);
+  sendMessage(message);
+  pthread_mutex_unlock(&socketMutex);
+}
+
+void messageSocketR(const char* message, char* buffer) {
+  pthread_mutex_lock(&socketMutex);
+  sendMessage(message);
+  char recivedMessage[1024];
+  int recivedBytes = 0;
+  recivedBytes = reciveMessage(recivedMessage, 1024);
+  recivedMessage[recivedBytes] = "\0";
+  strcpy(buffer, recivedMessage);
+  pthread_mutex_unlock(&socketMutex);
 }

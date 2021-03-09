@@ -2,12 +2,10 @@
 #include <stdio.h>
 
 double getSocketSensorValue(char* sensor) {
-  sendMessage(sensor);
-  char* revicedMessage[1024];
-  int recivedBytes = 0;
-  recivedBytes = reciveMessage(revicedMessage, 1024);
-  strcut(revicedMessage, 3, -1);
-  double sensorValue = atof(revicedMessage);
+  char* recivedMessage = malloc(1024 * sizeof(char));
+  messageSocketR(sensor, recivedMessage);
+  strcut(recivedMessage, 3, -1);
+  double sensorValue = atof(recivedMessage);
   return sensorValue;
 }
 
@@ -43,18 +41,11 @@ double getSensor(sensor_t sensor) {
 void setSenstor(sensor_t sensor) { printf("sensor: %d", sensor); }
 
 void refreshSensorsValues() {
-  pthread_mutex_lock(&sensorMutex);
   sTa = getSensor(Ta);
   sTi = getSensor(Ti);
   sT = getSensor(T);
   sNo = getSensor(No);
   sH = getSensor(H);
-
-  if (sT >= temperatureLimit) {
-    pthread_cond_signal(&alarmCondition);
-  }
-
-  pthread_mutex_unlock(&sensorMutex);
 }
 
 void printSensor(sensor_t sensor) {
