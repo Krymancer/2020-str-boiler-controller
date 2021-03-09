@@ -10,6 +10,8 @@
 extern double hRef;
 extern double tRef;
 
+#define N_SAMPLES 1000
+
 void temperatureControl(void);
 void waterLevelControl(void);
 void showSensorsInfo(void);

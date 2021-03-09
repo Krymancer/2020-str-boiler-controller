@@ -9,7 +9,9 @@ void temperatureControl(void) {
   clock_gettime(CLOCK_MONOTONIC, &t_start);
   t_start.tv_sec++;
 
-  while (1) {
+  int samples = 0;
+
+  while (samples++ <= N_SAMPLES) {
     clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
 
     // Do task
@@ -34,14 +36,18 @@ void waterLevelControl(void) {
   clock_gettime(CLOCK_MONOTONIC, &t_start);
   t_start.tv_sec++;
 
-  while (1) {
+  int samples = 0;
+
+  while (samples++ <= N_SAMPLES) {
     clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
 
     // Do Task
     if (sH < hRef) {
       setAtuator(Ni, 10);
+      setAtuator(Nf, 0);
     } else {
       setAtuator(Ni, 0);
+      setAtuator(Nf, 10);
     }
 
     clock_gettime(CLOCK_MONOTONIC, &t_end);
