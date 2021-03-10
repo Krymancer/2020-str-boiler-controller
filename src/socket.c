@@ -25,7 +25,7 @@ struct sockaddr_in createEndpointAddress(char* destino, int porta_destino) {
 
   if (dest_internet == NULL) {
     fprintf(stderr, "Endereco de rede invalido\n");
-    exit(EXIT_FAILURE);
+    exit(EXIT_SUCCESS);
   }
 
   memset((char*)&servidor, 0, sizeof(servidor));
