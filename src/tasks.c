@@ -42,7 +42,6 @@ void waterLevelControl(void) {
     clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
 
     // Do Task
-    setAtuator(Q, 12345);
 
     clock_gettime(CLOCK_MONOTONIC, &t_end);
 
@@ -96,32 +95,13 @@ void showSensorsInfo(void) {
 }
 
 void refreshSensorsInfo(void) {
-  struct timespec t_start, t_end;
-  long period = 10000000;  // 10ms
-  clock_gettime(CLOCK_MONOTONIC, &t_start);
-  t_start.tv_sec++;
-
-  while (1) {
-    clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
-
+  while (TRUE) {
     // Do Task
     refreshSensorsValues();
 
-    char* sensorsString[1024];
+    char* sensorsString[256];
     sprintf(sensorsString, "SI[sT] %f\nSI[sNo] %f\nSI[sH] %f", sT, sNo, sH);
     insertBuffer(sensorsString);
-
-    clock_gettime(CLOCK_MONOTONIC, &t_end);
-
-    long responseTime = timeDifference(t_start, t_end);
-    insertResponseTimeInBuffer("RS", responseTime);
-
-    // Wait until next period
-    t_start.tv_nsec += period;
-    while (t_start.tv_nsec >= NANOSECONDS_PER_SECOND) {
-      t_start.tv_nsec -= NANOSECONDS_PER_SECOND;
-      t_start.tv_sec++;
-    }
   }
 }
 

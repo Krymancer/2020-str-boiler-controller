@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define incat(x, y) ((int)(x + 1) % (y + 1))
+
 static pthread_mutex_t atuatorMutex = PTHREAD_MUTEX_INITIALIZER;
 
 /**
@@ -27,7 +29,7 @@ enum atuators { Na,
  * aNf => Fluxo de saida de agua para o esgoto [Kg/s]
  * aQ => Aquecedor dentro do Recipiente [J/s]
  */
-double aNa, aNi, aNf, aQ;
+extern double aNa, aNi, aNf, aQ;
 
 // Atuator type
 typedef enum atuators atuator_t;

@@ -2,6 +2,13 @@
 
 pthread_mutex_t socketMutex = PTHREAD_MUTEX_INITIALIZER;
 
+// Socket port
+static int port;
+// Local Socket
+static int localSocket;
+// Java Application address
+static struct sockaddr_in endpoint;
+
 int createLocalSocket(void) {
   int socket_local; /* Socket usado na comunicacao */
 
@@ -37,39 +44,47 @@ struct sockaddr_in createEndpointAddress(char* destino, int porta_destino) {
   return servidor;
 }
 
-void sendMessage(char* mensagem) {
+void sendMessage(int localSocket, struct sockaddr_in endpoint, char* mensagem) {
   /* Envia msg ao servidor */
   if (sendto(localSocket, mensagem, strlen(mensagem) + 1, 0, (struct sockaddr*)&endpoint, sizeof(endpoint)) < 0) {
     perror("sendto");
   }
 }
 
-int reciveMessage(char* buffer, int TAM_BUFFER) {
+int reciveMessage(int localSocket, char* buffer, int TAM_BUFFER) {
   int bytes_recebidos; /* Numero de bytes recebidos */
 
   /* Espera pela msg de resposta do servidor */
   bytes_recebidos = recvfrom(localSocket, buffer, TAM_BUFFER, 0, NULL, 0);
 
   if (bytes_recebidos < 0) {
+    printf("error");
     perror("recvfrom");
+    exit(FAILED);
   }
+
   return bytes_recebidos;
 }
 
-void messageSocket(const char* message) {
+void createSocket(char* destination, char* portStr) {
   pthread_mutex_lock(&socketMutex);
-  sendMessage(message);
+  port = atoi(portStr);
+  localSocket = createLocalSocket();
+  endpoint = createEndpointAddress(destination, port);
   pthread_mutex_unlock(&socketMutex);
 }
 
-void messageSocketR(const char* message, char* buffer) {
-  pthread_mutex_lock(&socketMutex);
-  sendMessage(message);
-  char recivedMessage[1024];
-  memset(recivedMessage, 1024, '\0');
+double messageSocket(const char* message) {
+  char recivedMessage[256];
   int recivedBytes = 0;
-  recivedBytes = reciveMessage(recivedMessage, 1024);
+
+  pthread_mutex_lock(&socketMutex);
+
+  sendMessage(localSocket, endpoint, message);
+  recivedBytes = reciveMessage(localSocket, recivedMessage, 256);
   recivedMessage[recivedBytes] = "\0";
-  strcpy(buffer, recivedMessage);
+
   pthread_mutex_unlock(&socketMutex);
+
+  return atof(&recivedMessage[3]);
 }

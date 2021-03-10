@@ -5,6 +5,10 @@
 #include <string.h>
 #include <time.h>
 
+#define DEBUG 1
+
+#define pd(x) ((DEBUG == 1) ? (printf("%s\n", x)) : (printf("")))
+
 #define ps(x) printf("%s\n", x);
 
 // Error opening file code
