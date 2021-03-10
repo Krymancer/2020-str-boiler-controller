@@ -39,10 +39,8 @@ struct sockaddr_in createEndpointAddress(char* destino, int porta_destino) {
 
 void sendMessage(char* mensagem) {
   /* Envia msg ao servidor */
-  if (sendto(localSocket, mensagem, strlen(mensagem) + 1, 0,
-             (struct sockaddr*)&endpoint, sizeof(endpoint)) < 0) {
+  if (sendto(localSocket, mensagem, strlen(mensagem) + 1, 0, (struct sockaddr*)&endpoint, sizeof(endpoint)) < 0) {
     perror("sendto");
-    return;
   }
 }
 
@@ -51,6 +49,7 @@ int reciveMessage(char* buffer, int TAM_BUFFER) {
 
   /* Espera pela msg de resposta do servidor */
   bytes_recebidos = recvfrom(localSocket, buffer, TAM_BUFFER, 0, NULL, 0);
+
   if (bytes_recebidos < 0) {
     perror("recvfrom");
   }
@@ -67,6 +66,7 @@ void messageSocketR(const char* message, char* buffer) {
   pthread_mutex_lock(&socketMutex);
   sendMessage(message);
   char recivedMessage[1024];
+  memset(recivedMessage, 1024, '\0');
   int recivedBytes = 0;
   recivedBytes = reciveMessage(recivedMessage, 1024);
   recivedMessage[recivedBytes] = "\0";

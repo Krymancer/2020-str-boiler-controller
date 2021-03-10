@@ -5,6 +5,12 @@
 #include <math.h>
 #include <pthread.h>
 
+static pthread_mutex_t msTa = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t msT = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t msTi = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t msNo = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t msH = PTHREAD_MUTEX_INITIALIZER;
+
 static pthread_mutex_t sensorMutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t alarmCondition = PTHREAD_COND_INITIALIZER;
 static double temperatureLimit;
@@ -17,7 +23,11 @@ static double temperatureLimit;
  * No => Fluxo de saida de agua do recipiente [Kg/s]
  * H  => Altura da coluna d'agua [m]
  */
-enum sensors { Ta, T, Ti, No, H };
+enum sensors { Ta,
+               T,
+               Ti,
+               No,
+               H };
 
 /**
  * Variable to store sensors values

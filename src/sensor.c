@@ -41,33 +41,57 @@ double getSensor(sensor_t sensor) {
 void setSenstor(sensor_t sensor) { printf("sensor: %d", sensor); }
 
 void refreshSensorsValues() {
+  pthread_mutex_lock(&msTa);
   sTa = getSensor(Ta);
+  pthread_mutex_unlock(&msTa);
+
+  pthread_mutex_lock(&msTi);
   sTi = getSensor(Ti);
+  pthread_mutex_unlock(&msTi);
+
+  pthread_mutex_lock(&msT);
   sT = getSensor(T);
+  pthread_mutex_unlock(&msT);
+
+  pthread_mutex_lock(&msNo);
   sNo = getSensor(No);
+  pthread_mutex_unlock(&msNo);
+
+  pthread_mutex_lock(&msH);
   sH = getSensor(H);
+  pthread_mutex_unlock(&msH);
 }
 
 void printSensor(sensor_t sensor) {
   switch (sensor) {
     case Ta: {
+      pthread_mutex_lock(&msTa);
       printf("sTa: %f\n", sTa);
+      pthread_mutex_unlock(&msTa);
       break;
     }
     case T: {
+      pthread_mutex_lock(&msT);
       printf("sT: %f\n", sT);
+      pthread_mutex_unlock(&msT);
       break;
     }
     case Ti: {
+      pthread_mutex_lock(&msTi);
       printf("sTi: %f\n", sTi);
+      pthread_mutex_unlock(&msTi);
       break;
     }
     case No: {
+      pthread_mutex_lock(&msNo);
       printf("sNo: %f\n", sNo);
+      pthread_mutex_unlock(&msNo);
       break;
     }
     case H: {
+      pthread_mutex_lock(&msH);
       printf("sH: %f\n", sH);
+      pthread_mutex_unlock(&msH);
       break;
     }
     default: {

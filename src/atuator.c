@@ -2,11 +2,13 @@
 
 void setSocketAtuatorValue(char* atuator, double value) {
   char* message[256];
+  char* recivedMessage = malloc(1024 * sizeof(char));
   sprintf(message, "%s%lf", atuator, value);
-  messageSocket(message);
+  messageSocketR(message, recivedMessage);
 }
 
 double setAtuator(atuator_t atuator, double value) {
+  pthread_mutex_lock(&atuatorMutex);
   switch (atuator) {
     case Na: {
       aNa = value;
@@ -33,5 +35,6 @@ double setAtuator(atuator_t atuator, double value) {
       break;
     }
   }
+  pthread_mutex_unlock(&atuatorMutex);
   return OK;
 }

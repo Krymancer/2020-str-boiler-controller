@@ -2,8 +2,11 @@
 
 #include "socket.h"
 #include "util.h"
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+static pthread_mutex_t atuatorMutex = PTHREAD_MUTEX_INITIALIZER;
 
 /**
  * Enumerate atuators
