@@ -26,3 +26,5 @@ run:
 
 dev: clean app run
 	@echo "Full"
+
+check: dev
