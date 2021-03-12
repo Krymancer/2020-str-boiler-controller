@@ -1,6 +1,9 @@
 #include "sensor.h"
 #include <stdio.h>
 
+double sTa, sT, sTi, sNo, sH;
+
+
 double getSocketSensorValue(char* message) {
   double sensorValue = messageSocket(message);
   return sensorValue;

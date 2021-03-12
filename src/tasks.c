@@ -15,7 +15,7 @@ void temperatureControl(void) {
     clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
 
     // Do task
-    printf("I'm Alive T");
+    //printf("I'm Alive T");
     if((sH > (hRef-0.901) && sH < (hRef+0.099) ) && sT < tRef){
       setAtuator(Q, 1000000);
     }
@@ -49,27 +49,32 @@ void waterLevelControl(void) {
     clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &t_start, NULL);
 
     // Do Task
-    printf("I'm Alive H");
+    //printf("I'm Alive H");
     if(sH < hRef){
       if(sT < tRef){ // Coluna Baixa e Temperatura Baixa
-        if(sNo <= 5.0 && sNo != 0.0){
-          setAtuator(Na, 2*sNo);
-          setAtuator(Ni, 0.0);
+        if(sNo <= 50.0 && sNo != 0.0){
+          if(sNo <= 10){
+          setAtuator(Na, sNo);
+          setAtuator(Ni, sNo);
+          }else{
+          setAtuator(Ni, sNo);
+          setAtuator(Na,10.0);
+          }
           setAtuator(Nf, 0.0);
         } else {
-          setAtuator(Na, 10.0);
-          setAtuator(Ni, 0.0);
+          setAtuator(Ni, sNo);
+          setAtuator(Na,10.0);
           setAtuator(Nf, 0.0);
         }
       }
       if(sT > tRef){ // Coluna Baixa e Temperatura Alta
-        if(sNo <= 5.0 && sNo != 0.0){
+        if(sNo <= 50.0 && sNo != 0.0){
           setAtuator(Na, 0.0);
           setAtuator(Ni, 2*sNo);
           setAtuator(Nf, 0.0);
         } else {
           setAtuator(Na, 0.0);
-          setAtuator(Ni, 10.0);
+          setAtuator(Ni, sNo);
           setAtuator(Nf, 0.0);
           setAtuator(Q, 0.0);
         }
@@ -77,14 +82,14 @@ void waterLevelControl(void) {
     }
     if(sH > hRef){
       if(sT > tRef){ // Coluna Alta Temperatura Alta
-        if(sNo <= 5.0 && sNo != 0.0){
+        if(sNo <= 50.0 && sNo != 0.0){
           setAtuator(Na, 0.0);
           setAtuator(Ni, sNo);
           setAtuator(Nf, sNo);
         }else{
           setAtuator(Na, 0.0);
-          setAtuator(Ni, 10.0);
-          setAtuator(Nf, 10.0);
+          setAtuator(Ni, sNo);
+          setAtuator(Nf, sNo);
         }
       }
       if(sT < tRef){ // Coluna Alta e Temperatura Baixa

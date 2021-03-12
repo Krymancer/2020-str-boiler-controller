@@ -4,7 +4,7 @@ SRC=src
 OBJ=obj
 BIN=bin
 FLAGS=-lpthread -w 
-ARGS=192.168.2.100 4545
+ARGS=localhost 4545
 
 SRC_FILES=$(wildcard $(SRC)/*.c)
 OBJ_FILES=$(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRC_FILES))

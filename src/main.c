@@ -5,8 +5,8 @@ int main(int argc, char** argv) {
     return FAILED;
   }
 
-  tRef = 25;  //setReferenceTemperature();
-  hRef = 2.5;   //setReferenceHeight();
+  tRef = 29;  //setReferenceTemperature();
+  hRef = 1.5;   //setReferenceHeight();
 
   createSocket(argv[1], argv[2]);
 

@@ -37,7 +37,7 @@ enum sensors { Ta,
  * sNo => Fluxo de saida de agua do recipiente [Kg/s]
  * sH  => Altura da coluna d'agua [m]
  */
-double sTa, sT, sTi, sNo, sH;
+extern double sTa, sT, sTi, sNo, sH;
 
 // Sensor type
 typedef enum sensors sensor_t;
