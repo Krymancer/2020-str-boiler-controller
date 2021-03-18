@@ -2,11 +2,12 @@
 
 int main(int argc, char** argv) {
   if (argc < 3) {
+    printf("Missing comand line arguments: IP and/or PORT");
     return FAILED;
   }
 
-  tRef = 29;  //setReferenceTemperature();
-  hRef = 1.5;   //setReferenceHeight();
+  tRef = setReferenceTemperature();
+  hRef = setReferenceHeight();
 
   createSocket(argv[1], argv[2]);
 

@@ -16,7 +16,6 @@ double setReferenceTemperature() {
   double value;
   scanf("%lf", &value);
   printf(RESET);
-
   return value;
 }
 
