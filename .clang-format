@@ -35,4 +35,6 @@ RawStringFormats:
 
 CommentPragmas: '(@copydoc)'
 
+# Remove line limit
+
 ColumnLimit: 0
