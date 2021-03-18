@@ -6,12 +6,12 @@
 extern pthread_mutex_t screenMutex;
 
 /**
- * Allocate the screen to print something
+ * Allocate screen to print something
  */
 void allocateScreen(void);
 
 /**
- * Free the screen after use
+ * Free screen after use
  */
 void freeScreen(void);
 
